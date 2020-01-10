@@ -36,17 +36,17 @@ class Product:
 
     def updateRoundsRemain(self, rand):
         if rand < self.risk:
-            print('BOOM![{:.2f}] {} missed {}! (balance:{})'.format( \
-            rand, self.owner.name, self.revenue, self.owner.money))
-            self.roundsRemain = 0
-        self.roundsRemain -= 1
+            self.roundsRemain = -1
+        else:
+            self.roundsRemain -= 1
 
     def update(self):
         rand = random.random()
         self.updateRoundsRemain(rand)
         if self.getRoundsRemain() == 0:
-            self.owner.money += self.revenue
-            print('{} +{}! (balance:{})'.format(self.owner.name, self.revenue, self.owner.money))
+            self.owner.earnMoney(self)
+        elif self.getRoundsRemain() < 0:
+            self.owner.loseMoney(self,rand)
 
     def display(self):
         print('(Price|{}, Revenue|{}, Terms|{}, Risk|{})'.format( \
@@ -73,6 +73,16 @@ class Player:
             print("{} can't afford it! (balance:{})".format(self.name, self.money))
         else:
             return input(self.name + ' buy? (y/n): ')
+
+    def earnMoney(self, product):
+        self.money += product.revenue
+        print('{} +{}! (balance:{})'.format(self.name, product.revenue, self.money))
+        self.myProduct.remove(product)
+
+    def loseMoney(self, product, rand):
+        print('BOOM![{:.2f}] {} missed {}! (balance:{})'.format( \
+        rand, self.name, product.revenue, self.money))
+        self.myProduct.remove(product)
 
     def rollDice(self):
         return random.randint(1,1000)
