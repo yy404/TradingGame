@@ -39,7 +39,6 @@ class Product:
         self.roundsRemain -= 1
         if self.roundsRemain == 0:
             self.owner.money += self.revenue
-            self.owner.myProduct
             print('{} +{}! (balance:{})'.format(self.owner.name, self.revenue, self.owner.money))
 
     def display(self):
