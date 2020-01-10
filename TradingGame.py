@@ -4,16 +4,29 @@ class Product:
 
     def __init__(self):
 
-        self.price = random.randint(1,10)
-        self.terms = random.randint(1,3)
+        self.setAttributes(0, 0, 0, 0)
+        self.owner = None
+        self.roundsRemain = 0
 
+        self.setAttributesRandom()
+        self.roundsRemain = self.terms
+
+    def setAttributes(self, price, terms, revenue, risk):
+        self.price = price
+        self.terms = terms
+        self.revenue = revenue
+        self.risk = risk
+
+    def getAttributes(self):
+        return (self.price, self.terms, self.revenue, self.risk)
+
+    def setAttributesRandom(self):
         self.rate = random.uniform(0.1, 0.3)
 
+        self.price = random.randint(1,10)
+        self.terms = random.randint(1,3)
         self.revenue = round(self.price * ((self.rate + 1)**self.terms), 2)
         self.risk = round(self.rate, 4)
-
-        self.owner = None
-        self.roundsRemain = self.terms
 
     def update(self):
 
