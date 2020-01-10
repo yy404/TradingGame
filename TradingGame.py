@@ -7,37 +7,44 @@ class Product:
         self.setAttributes(0, 0, 0, 0)
         self.owner = None
         self.roundsRemain = 0
-
+        # then set random attributes
         self.setAttributesRandom()
-        self.roundsRemain = self.terms
 
     def setAttributes(self, price, terms, revenue, risk):
         self.price = price
         self.terms = terms
         self.revenue = revenue
         self.risk = risk
+        self.setRoundsRemain()
 
     def getAttributes(self):
         return (self.price, self.terms, self.revenue, self.risk)
 
     def setAttributesRandom(self):
-        self.rate = random.uniform(0.1, 0.3)
-
+        rate = random.uniform(0.1, 0.3)
         self.price = random.randint(1,10)
         self.terms = random.randint(1,3)
-        self.revenue = round(self.price * ((self.rate + 1)**self.terms), 2)
-        self.risk = round(self.rate, 4)
+        self.revenue = round(self.price * ((rate + 1)**self.terms), 2)
+        self.risk = round(rate, 4)
+        self.setRoundsRemain()
 
-    def update(self):
+    def setRoundsRemain(self):
+        self.roundsRemain = self.terms
 
-        rand = random.random()
+    def getRoundsRemain(self):
+        return self.roundsRemain
+
+    def updateRoundsRemain(self, rand):
         if rand < self.risk:
             print('BOOM![{:.2f}] {} missed {}! (balance:{})'.format( \
             rand, self.owner.name, self.revenue, self.owner.money))
-            self.roundsRemain = -1
-
+            self.roundsRemain = 0
         self.roundsRemain -= 1
-        if self.roundsRemain == 0:
+
+    def update(self):
+        rand = random.random()
+        self.updateRoundsRemain(rand)
+        if self.getRoundsRemain() == 0:
             self.owner.money += self.revenue
             print('{} +{}! (balance:{})'.format(self.owner.name, self.revenue, self.owner.money))
 
