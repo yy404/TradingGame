@@ -64,10 +64,11 @@ class Product:
 class Player:
 
     playerNum = 0
+    INIT_MONEY = 10
 
     def __init__(self, name):
         self.name = name
-        self.money = 10
+        self.money = Player.INIT_MONEY
         self.myProduct = []
 
         Player.playerNum += 1
