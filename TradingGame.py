@@ -81,7 +81,7 @@ class Player:
         if product.price > self.money:
             print("{} can't afford it! (balance:{})".format(self.name, self.money))
         else:
-            return input(self.name + ' buy? (y/n): ')
+            return input(self.name + ' trade? (y/n): ')
 
     def earnMoney(self, product):
         self.money += product.revenue
@@ -108,7 +108,7 @@ class PlayerRobot(Player):
         if product.price < self.money and product.risk < 0.3:
             if random.random() < 0.8:
                 decision = 'y'
-        print(self.name + ' buy? (y/n): ' + decision)
+        print(self.name + ' trade? (y/n): ' + decision)
         return decision
 
 
